@@ -30,8 +30,24 @@ class ApplicationMain {
 		var types = [];
 		
 		
+		urls.push ("AG_Helvetica");
+		types.push (lime.Assets.AssetType.FONT);
+		
+		
 		urls.push ("assets/data/data-goes-here.txt");
 		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("Helios Cond Light");
+		types.push (lime.Assets.AssetType.FONT);
+		
+		
+		urls.push ("Roboto Condensed");
+		types.push (lime.Assets.AssetType.FONT);
+		
+		
+		urls.push ("Roboto Thin");
+		types.push (lime.Assets.AssetType.FONT);
 		
 		
 		urls.push ("assets/data/script.json");
@@ -151,7 +167,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "92",
+			build: "109",
 			company: "FomaLSSJ",
 			file: "Novelty",
 			fps: 60,

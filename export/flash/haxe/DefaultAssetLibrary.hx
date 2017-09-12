@@ -51,7 +51,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if (openfl && !flash)
 		
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_data_ag_helvetica_ttf);
 		
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_data_helios_cond_ttf);
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_data_roboto_condensed_ttf);
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_data_roboto_thin_ttf);
 		
 		
 		
@@ -71,8 +75,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
+		className.set ("assets/data/ag-helvetica.ttf", __ASSET__assets_data_ag_helvetica_ttf);
+		type.set ("assets/data/ag-helvetica.ttf", AssetType.FONT);
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
+		className.set ("assets/data/helios-cond.ttf", __ASSET__assets_data_helios_cond_ttf);
+		type.set ("assets/data/helios-cond.ttf", AssetType.FONT);
+		className.set ("assets/data/roboto-condensed.ttf", __ASSET__assets_data_roboto_condensed_ttf);
+		type.set ("assets/data/roboto-condensed.ttf", AssetType.FONT);
+		className.set ("assets/data/roboto-thin.ttf", __ASSET__assets_data_roboto_thin_ttf);
+		type.set ("assets/data/roboto-thin.ttf", AssetType.FONT);
 		className.set ("assets/data/script.json", __ASSET__assets_data_script_json);
 		type.set ("assets/data/script.json", AssetType.TEXT);
 		className.set ("assets/images/background.png", __ASSET__assets_images_background_png);
@@ -106,10 +118,26 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
+		id = "assets/data/ag-helvetica.ttf";
+		className.set (id, __ASSET__assets_data_ag_helvetica_ttf);
+		
+		type.set (id, AssetType.FONT);
 		id = "assets/data/data-goes-here.txt";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
+		id = "assets/data/helios-cond.ttf";
+		className.set (id, __ASSET__assets_data_helios_cond_ttf);
+		
+		type.set (id, AssetType.FONT);
+		id = "assets/data/roboto-condensed.ttf";
+		className.set (id, __ASSET__assets_data_roboto_condensed_ttf);
+		
+		type.set (id, AssetType.FONT);
+		id = "assets/data/roboto-thin.ttf";
+		className.set (id, __ASSET__assets_data_roboto_thin_ttf);
+		
+		type.set (id, AssetType.FONT);
 		id = "assets/data/script.json";
 		path.set (id, id);
 		
@@ -184,8 +212,20 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		var useManifest = false;
 		
+		className.set ("assets/data/ag-helvetica.ttf", __ASSET__assets_data_ag_helvetica_ttf);
+		type.set ("assets/data/ag-helvetica.ttf", AssetType.FONT);
+		
 		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
+		
+		className.set ("assets/data/helios-cond.ttf", __ASSET__assets_data_helios_cond_ttf);
+		type.set ("assets/data/helios-cond.ttf", AssetType.FONT);
+		
+		className.set ("assets/data/roboto-condensed.ttf", __ASSET__assets_data_roboto_condensed_ttf);
+		type.set ("assets/data/roboto-condensed.ttf", AssetType.FONT);
+		
+		className.set ("assets/data/roboto-thin.ttf", __ASSET__assets_data_roboto_thin_ttf);
+		type.set ("assets/data/roboto-thin.ttf", AssetType.FONT);
 		
 		className.set ("assets/data/script.json", __ASSET__assets_data_script_json);
 		type.set ("assets/data/script.json", AssetType.TEXT);
@@ -873,7 +913,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if !display
 #if flash
 
+@:keep @:bind #if display private #end class __ASSET__assets_data_ag_helvetica_ttf extends flash.text.Font { }
 @:keep @:bind #if display private #end class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_data_helios_cond_ttf extends flash.text.Font { }
+@:keep @:bind #if display private #end class __ASSET__assets_data_roboto_condensed_ttf extends flash.text.Font { }
+@:keep @:bind #if display private #end class __ASSET__assets_data_roboto_thin_ttf extends flash.text.Font { }
 @:keep @:bind #if display private #end class __ASSET__assets_data_script_json extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_hana_panty_smile_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -892,7 +936,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 #elseif html5
 
+@:keep #if display private #end class __ASSET__assets_data_ag_helvetica_ttf extends lime.text.Font { public function new () { super (); name = "AG_Helvetica"; } } 
 
+@:keep #if display private #end class __ASSET__assets_data_helios_cond_ttf extends lime.text.Font { public function new () { super (); name = "Helios Cond Light"; } } 
+@:keep #if display private #end class __ASSET__assets_data_roboto_condensed_ttf extends lime.text.Font { public function new () { super (); name = "Roboto Condensed"; } } 
+@:keep #if display private #end class __ASSET__assets_data_roboto_thin_ttf extends lime.text.Font { public function new () { super (); name = "Roboto Thin"; } } 
 
 
 
@@ -916,7 +964,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux || cpp)
 
 
+@:font("assets/data/ag-helvetica.ttf") #if display private #end class __ASSET__assets_data_ag_helvetica_ttf extends lime.text.Font {}
 @:file("assets/data/data-goes-here.txt") #if display private #end class __ASSET__assets_data_data_goes_here_txt extends lime.utils.Bytes {}
+@:font("assets/data/helios-cond.ttf") #if display private #end class __ASSET__assets_data_helios_cond_ttf extends lime.text.Font {}
+@:font("assets/data/roboto-condensed.ttf") #if display private #end class __ASSET__assets_data_roboto_condensed_ttf extends lime.text.Font {}
+@:font("assets/data/roboto-thin.ttf") #if display private #end class __ASSET__assets_data_roboto_thin_ttf extends lime.text.Font {}
 @:file("assets/data/script.json") #if display private #end class __ASSET__assets_data_script_json extends lime.utils.Bytes {}
 @:image("assets/images/background.png") #if display private #end class __ASSET__assets_images_background_png extends lime.graphics.Image {}
 @:image("assets/images/hana_panty_smile.png") #if display private #end class __ASSET__assets_images_hana_panty_smile_png extends lime.graphics.Image {}
@@ -938,6 +990,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 #end
 
 #if (openfl && !flash)
+@:keep #if display private #end class __ASSET__OPENFL__assets_data_ag_helvetica_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__assets_data_ag_helvetica_ttf (); src = font.src; name = font.name; super (); }}
+@:keep #if display private #end class __ASSET__OPENFL__assets_data_helios_cond_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__assets_data_helios_cond_ttf (); src = font.src; name = font.name; super (); }}
+@:keep #if display private #end class __ASSET__OPENFL__assets_data_roboto_condensed_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__assets_data_roboto_condensed_ttf (); src = font.src; name = font.name; super (); }}
+@:keep #if display private #end class __ASSET__OPENFL__assets_data_roboto_thin_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__assets_data_roboto_thin_ttf (); src = font.src; name = font.name; super (); }}
 @:keep #if display private #end class __ASSET__OPENFL__flixel_fonts_nokiafc22_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__flixel_fonts_nokiafc22_ttf (); src = font.src; name = font.name; super (); }}
 @:keep #if display private #end class __ASSET__OPENFL__flixel_fonts_monsterrat_ttf extends openfl.text.Font { public function new () { var font = new __ASSET__flixel_fonts_monsterrat_ttf (); src = font.src; name = font.name; super (); }}
 

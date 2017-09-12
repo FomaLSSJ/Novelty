@@ -18,6 +18,8 @@ class PlayState extends FlxState
 		textField = new FlxText(24, 24, 0, "Play State");
 		
 		backgroundLayout.setBackground(AssetPaths.background__png);
+
+		characterLayout.init();
 		
 		dialogBox.init();
 		
@@ -52,6 +54,14 @@ class PlayState extends FlxState
 		if (FlxG.mouse.justPressedRight)
 		{
 			trace('click right');
+		}
+		
+		if (FlxG.keys.justPressed.T)
+		{
+			if (Reg.character.visible == true)
+			{
+				Reg.character.move();
+			}
 		}
 	}
 }
