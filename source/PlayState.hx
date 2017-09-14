@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 class PlayState extends FlxState
 {
 	private var textField:FlxText;
+	private var characters:Map<String, Character>;
 	
 	private var backgroundLayout:BackgroundLayout = Reg.background;
 	private var characterLayout:CharacterLayout = Reg.character;
@@ -28,6 +29,14 @@ class PlayState extends FlxState
 		add(dialogBox);
 		
 		add(textField);
+		
+		characters = characterLayout.getCharacters();
+		
+		var hana:Character = new Character("Хана");
+		hana.addSprite("normal", AssetPaths.hana_school_confused__png);
+		hana.addSprite("home", AssetPaths.hana_panty_smile__png);
+		
+		characters.set("ha", hana);
 		
 		super.create();
 	}

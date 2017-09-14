@@ -19,14 +19,14 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	
 	private var index = 0;
 	private var script:Array<Map<String, Dynamic>> = [
-		["key" => "message", "data" => {"who": "", "say": "..."}],
-		["key" => "show", "data" => {"from": "outleft", "to": "left"}],
-		["key" => "message", "data" => {"who": "Хана", "say": "Привет!"}],
-		["key" => "message", "data" => {"who": "Хана", "say": "Нравятся мои трусики?"}],
-		["key" => "message", "data" => {"who": "Хана", "say": "Можешь их снять :3"}],
-		["key" => "message", "data" => {"who": "Хана", "say": "Но не сейчас :Р"}],
-		["key" => "hide", "data" => {"to": "outleft"}],
-		["key" => "message", "data" => {"who": "Рокет", "say": "Блэт!"}],
+		["key" => "message", "data" => {who: "", say: "..."}],
+		["key" => "show", "data" => {who: "ha", pose: "home", from: "outleft", to: "left"}],
+		["key" => "message", "data" => {who: "ha", say: "Привет!"}],
+		["key" => "message", "data" => {who: "ha", say: "Нравятся мои трусики?"}],
+		["key" => "message", "data" => {who: "ha", say: "Можешь их снять :3"}],
+		["key" => "message", "data" => {who: "ha", say: "Но не сейчас :Р"}],
+		["key" => "hide", "data" => {who: "ha", to: "outleft"}],
+		["key" => "message", "data" => {who: "Рокет", say: "Блэт!"}],
 	];
 	
 	override public function new(MaxSize:Int=0):Void
@@ -78,37 +78,20 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		var key = script[index].get("key");
 		var data = script[index].get("data");
 		
-		var char:FlxSprite = Reg.character.getFirstExisting();
+		var characters:Map<String, Character> = Reg.character.getCharacters();
 		
 		switch (key)
 		{
 			case "show":
-				var from:FlxPoint = new FlxPoint(0, 0);
-				var to:FlxPoint = new FlxPoint(0, 0);
-				
-				if (data.from == "outleft")
-				{
-					from.set(char.width * -1, FlxG.height - char.height);
-				}
-				
-				if (data.to == "left") {
-					to.set(0, FlxG.height - char.height);
-				}
-				
-				Reg.character.show(from, to);
+				Reg.character.show(data.who, data.pose, data.from, data.to);
+
 				next();
 			case "hide":
-				var to:FlxPoint = new FlxPoint(0, 0);
-				
-				if (data.to == "outleft")
-				{
-					to.set(char.width * -1, FlxG.height - char.height);
-				}
-				
-				Reg.character.hide(to);
+				Reg.character.hide(data.who, data.to);
+
 				next();
 			default:
-				whoBox.text = data.who;
+				whoBox.text = Reg.character.say(data.who);
 				textBox.text = data.say;
 		}
 	}
