@@ -7,6 +7,7 @@ import flixel.ui.FlxButton;
 class MenuState extends FlxState 
 {
 	private var buttonNewGame:FlxButton;
+	private var buttonOptions:FlxButton;
 	
 	override public function create():Void
 	{
@@ -14,6 +15,11 @@ class MenuState extends FlxState
 		buttonNewGame.setPosition(FlxG.width / 2 - buttonNewGame.width / 2, FlxG.height / 2);
 		
 		add(buttonNewGame);
+		
+		buttonOptions = new FlxButton(0, 0, "Options", onOptions);
+		buttonOptions.setPosition(FlxG.width / 2 - buttonNewGame.width / 2, FlxG.height / 2 + 40);
+		
+		add(buttonOptions);
 		
 		super.create();
 	}
@@ -26,5 +32,10 @@ class MenuState extends FlxState
 	private function onPlay():Void
 	{
 		FlxG.switchState(new PlayState());
+	}
+	
+	private function onOptions():Void
+	{
+		FlxG.switchState(new OptionState());
 	}
 }

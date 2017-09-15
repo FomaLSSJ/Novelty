@@ -4,9 +4,11 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
 {
+	private var skipTimer:FlxTimer;
 	private var textField:FlxText;
 	private var characters:Map<String, Character>;
 	
@@ -30,13 +32,11 @@ class PlayState extends FlxState
 		
 		add(textField);
 		
-		characters = characterLayout.getCharacters();
-		
-		var hana:Character = new Character("Хана");
+		var hana:Character = new Character("ha", "Хана");
 		hana.addSprite("normal", AssetPaths.hana_school_confused__png);
 		hana.addSprite("home", AssetPaths.hana_panty_smile__png);
 		
-		characters.set("ha", hana);
+		characterLayout.append("ha", hana);
 		
 		super.create();
 	}
@@ -67,9 +67,29 @@ class PlayState extends FlxState
 		
 		if (FlxG.keys.justPressed.T)
 		{
-			if (Reg.character.visible == true)
+			Reg.enabledSkip = false;
+		}
+		
+		if (FlxG.keys.justPressed.CONTROL)
+		{
+			if (Reg.enabledSkip != true)
 			{
-				Reg.character.move();
+				return;
+			}
+			
+			trace("Pressed CTRL -> Skip Mode ON");
+			skipTimer = new FlxTimer().start(0.25, function (timer:FlxTimer):Void
+			{
+				dialogBox.next();
+			}, 0);
+		}
+		
+		if (FlxG.keys.justReleased.CONTROL)
+		{
+			trace("Released CTRL -> Skip Mode OFF");
+			if (skipTimer != null)
+			{
+				skipTimer.destroy();
 			}
 		}
 	}

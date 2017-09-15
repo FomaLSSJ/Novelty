@@ -1,9 +1,8 @@
 package;
 
-//import sys.io.File;
-import flixel.math.FlxPoint;
 import haxe.Json;
 
+import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -18,16 +17,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	private var textBox:FlxText;
 	
 	private var index = 0;
-	private var script:Array<Map<String, Dynamic>> = [
-		["key" => "message", "data" => {who: "", say: "..."}],
-		["key" => "show", "data" => {who: "ha", pose: "home", from: "outleft", to: "left"}],
-		["key" => "message", "data" => {who: "ha", say: "Привет!"}],
-		["key" => "message", "data" => {who: "ha", say: "Нравятся мои трусики?"}],
-		["key" => "message", "data" => {who: "ha", say: "Можешь их снять :3"}],
-		["key" => "message", "data" => {who: "ha", say: "Но не сейчас :Р"}],
-		["key" => "hide", "data" => {who: "ha", to: "outleft"}],
-		["key" => "message", "data" => {who: "Рокет", say: "Блэт!"}],
-	];
+	public var dialogs:Array<Dynamic>;
 	
 	override public function new(MaxSize:Int=0):Void
 	{
@@ -41,10 +31,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		imageBox.setPosition(20, FlxG.height - (imageBox.height + 10));
 		imageBox.alpha = 0.75;
 	
-		//var data:Dynamic = File.read(AssetPaths.script__json);
-		//script = Json.parse(AssetPaths.script__json);
-		
-		//trace(data);
+		dialogs = Script.json("assets/data/script.json");
 		
 		whoBox = new FlxText(imageBox.x + 20, imageBox.y + 15, imageBox.width - 40, "...");
 		whoBox.setFormat(AssetPaths.helios_cond__ttf, 16, FlxColor.WHITE);
@@ -70,13 +57,13 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 			index = idx;
 		}
 		
-		if (index > script.length -1)
+		if (index > dialogs.length -1)
 		{
 			index = 0;
 		}
-	
-		var key = script[index].get("key");
-		var data = script[index].get("data");
+
+		var key = dialogs[index].key;
+		var data = dialogs[index].data;
 		
 		var characters:Map<String, Character> = Reg.character.getCharacters();
 		

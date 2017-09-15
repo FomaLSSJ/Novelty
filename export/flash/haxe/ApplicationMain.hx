@@ -167,7 +167,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "175",
+			build: "317",
 			company: "FomaLSSJ",
 			file: "Novelty",
 			fps: 60,

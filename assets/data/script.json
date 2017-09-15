@@ -1,7 +1,59 @@
-{
-	"0": "Hello",
-	"1": "World",
-	"2": "Kek",
-	"3": "Shrek",
-	"4": "Cheburek"
-}
+[{
+	"key": "message",
+	"data": {
+		"who": "",
+		"say": "..."
+	}
+}, {
+	"key": "show",
+	"data": {
+		"who": "ha",
+		"pose": "normal",
+		"from": "outleft",
+		"to": "left"
+	}
+}, {
+	"key": "message",
+	"data": {
+		"who": "ha",
+		"say": "Привет!"
+	}
+}, {
+	"key": "hide",
+	"data": {
+		"who": "ha",
+		"to": "outleft"
+	}
+}, {
+	"key": "message",
+	"data": {
+		"who": "Рокет", 
+		"say": "Блэт!"
+	}
+}, {
+	"key": "show",
+	"data": {
+		"who": "ha",
+		"pose": "home",
+		"from": "outright",
+		"to": "left"
+	}
+}, {
+	"key": "message",
+	"data": {
+		"who": "ha",
+		"say": "Test"
+	}
+}, {
+	"key": "hide",
+	"data": {
+		"who": "ha",
+		"to": "outright"
+	}
+}, {
+	"key": "message",
+	"data": {
+		"who": "Рокет", 
+		"say": "Блэт!"
+	}
+}]

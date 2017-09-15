@@ -18,60 +18,25 @@ class CharacterLayout extends FlxTypedGroup<Dynamic>
 	public function init():Void
 	{
 		characters = new Map<String, Character>();
+	}
+	
+	public function append(Key:String, Char:Character):Void
+	{
+		characters.set(Key, Char);
 		
-		var char:FlxSprite = new FlxSprite(0, 0, AssetPaths.hana_panty_smile__png);
-		char.visible = false;
-		
-		add(char);
+		add(Char);
 	}
 	
 	public function show(Who:String, Pose:String, From:String, ?To:String):Void
 	{
-		if (characters.exists(Who) && characters.get(Who).exists(Pose))
-		{
-			var who:Character = characters.get(Who);
-			var pose:FlxSprite = who.get(Pose);
-			var from:FlxPoint = Character.getPosition(pose, From);
-			var to:FlxPoint = Character.getPosition(pose, To);
-			
-			pose.alive = true;
-			pose.setPosition(from.x, from.y);
-		
-			Reg.character.add(pose);
-			
-			FlxTween.tween(pose, {x: to.x, y: to.y}, 0.5, {type: FlxTween.ONESHOT});
-		}
-		else
-		{
-			trace("Not exist " + Who + " or type " + Type + ".");
-			return;
-		}
+		var who:Character = characters.get(Who);
+		who.showSprite(Pose, From, To);
 	}
 	
 	public function hide(Who:String, ?To:String):Void
 	{
-		if (characters.exists(Who))
-		{
-			var who:Character = characters.get(Who);
-			var to:FlxPoint = Character.getPosition("outleft");
-			
-			FlxTween.tween(who, {x: to.x, y: to.y}, 0.5, {type: FlxTween.ONESHOT, onComplete: function (tween:FlxTween):Void
-			{
-				for (x in who)
-				{
-					if (Std.is(x, FlxSprite) && x.alive == true)
-					{
-						x.alive = false;
-						Reg.character.remove(x);
-					}
-				}
-			}});
-		}
-		else
-		{
-			trace("Not exist " + Who + " or type " + Type + ".");
-			return;
-		}
+		var who:Character = characters.get(Who);
+		who.hideSprite(To);
 	}
 	
 	public function move():Void
@@ -88,6 +53,6 @@ class CharacterLayout extends FlxTypedGroup<Dynamic>
 	
 	public function say(Key:String):String
 	{
-		return (characters.exists(Key)) ? characters.get(Key).get("name") : Key;
+		return (characters.exists(Key)) ? characters.get(Key).name : Key;
 	}
 }

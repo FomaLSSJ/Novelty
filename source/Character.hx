@@ -1,45 +1,52 @@
 package;
 
-import haxe.ds.ObjectMap;
-
-import flixel.FlxG;
-import flixel.math.FlxPoint;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 
-//TODO Переделать в FlxTypedGroup<FlxSprite>
-class Character extends ObjectMap<String, Dynamic>
+class Character extends FlxTypedGroup<Dynamic>
 {
-	override public function new(Name:String):Void
+	public var id:String;
+	public var name:String;
+	
+	override public function new(Id:String, Name:String, ?MaxSize:Int=0):Void
 	{
-		super();
+		super(MaxSize);
 		
-		this.set("name", Name);
+		id = Id;
+		name = Name;
 	}
 	
-	public function addSprite(Key:String, Sprite:FlxGraphicAsset):Void
+	public function addSprite(Pose:String, Sprite:FlxGraphicAsset):Void
 	{
-		var sprite:FlxSprite = new FlxSprite(Sprite);
-		sprite.alive = false;
+		var sprite:CharacterPose = new CharacterPose(Pose, Sprite);
 		
-		this.set(Key, sprite);
+		add(sprite);
 	}
 	
-	static public function getPosition(?Sprite:FlxSprite, ?Position:String):FlxPoint
+	public function showSprite(Pose:String, ?From:String=null, ?To:String=null):Void
 	{
-		var position:FlxPoint = new FlxPoint();
-
-		switch (Position) 
+		forEach(function (sprite:CharacterPose):Void
 		{
-			case "outleft":
-				position.set(
-					(Sprite != null) ? Sprite.width * -1 : -200,
-					(Sprite != null) ? FlxG.height - Sprite.height : FlxG.height - 320
-				);
-			default:
-				position.set();
-		}
-
-		return position;
+			if (sprite.pose == Pose)
+			{
+				sprite.visible = true;
+				sprite.setPosePosition(From, To);
+			}
+		});
+	}
+	
+	public function hideSprite(?To:String=null):Void
+	{
+		forEach(function (sprite:CharacterPose):Void
+		{
+			if (sprite.visible == true)
+			{
+				sprite.setPosePosition("default", To, function ():Void
+				{
+					sprite.visible = false;
+				});
+			}
+		});
 	}
 }
