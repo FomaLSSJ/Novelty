@@ -49,4 +49,19 @@ class Character extends FlxTypedGroup<Dynamic>
 			}
 		});
 	}
+	
+	public function getSprite():CharacterPose
+	{
+		var result:CharacterPose = null;
+		
+		forEach(function (sprite:CharacterPose):Void
+		{
+			if (sprite.visible == true)
+			{
+				result = sprite;
+			}
+		});
+		
+		return result;
+	}
 }

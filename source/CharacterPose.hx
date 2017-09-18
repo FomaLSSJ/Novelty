@@ -9,12 +9,15 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 class CharacterPose extends FlxSprite
 {
 	public var pose:String;
+	public var coord:String;
 	
 	public function new(Pose:String, ?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset):Void
 	{
 		super(X, Y, SimpleGraphic);
 		
 		pose = Pose;
+		coord = null;
+		
 		visible = false;
 	}
 	
@@ -79,6 +82,8 @@ class CharacterPose extends FlxSprite
 			default:
 				position.set(this.x, this.y);
 		}
+		
+		coord = Position;
 		
 		return position;
 	}

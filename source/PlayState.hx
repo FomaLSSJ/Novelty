@@ -8,6 +8,8 @@ import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
 {
+	private var gameSave:GameSave = Reg.gameSave;
+	
 	private var skipTimer:FlxTimer;
 	private var textField:FlxText;
 	private var characters:Map<String, Character>;
@@ -16,10 +18,13 @@ class PlayState extends FlxState
 	private var characterLayout:CharacterLayout = Reg.character;
 	private var dialogBox:DialogBox = Reg.dialogBox;
 	
-	override public function create():Void
+	public function new(?MaxSize:Int=0, ?IsLoad:Bool=false):Void
 	{
-		textField = new FlxText(24, 24, 0, "Play State");
+		super(MaxSize);
 		
+		textField = new FlxText(24, 24, 0, "PlayState");
+		
+		backgroundLayout.init();
 		backgroundLayout.setBackground(AssetPaths.background__png);
 
 		characterLayout.init();
@@ -38,7 +43,19 @@ class PlayState extends FlxState
 		
 		characterLayout.append("ha", hana);
 		
-		super.create();
+		if (IsLoad == true)
+		{
+			gameSave.bind(Reg.objectSave);
+			dialogBox.next(gameSave.data.currentScriptIndex);
+			
+			var chars:Array<Dynamic> = gameSave.data.currentChars;
+			for (char in chars)
+			{
+				characterLayout.show(char.id, char.pose, char.coord);
+			}
+			
+			gameSave.close();
+		}
 	}
 
 	override public function update(elapsed:Float):Void
@@ -67,7 +84,7 @@ class PlayState extends FlxState
 		
 		if (FlxG.keys.justPressed.T)
 		{
-			Reg.enabledSkip = false;
+			goToTitle();
 		}
 		
 		if (FlxG.keys.justPressed.CONTROL)
@@ -92,5 +109,30 @@ class PlayState extends FlxState
 				skipTimer.destroy();
 			}
 		}
+	}
+	
+	override public function destroy():Void
+	{
+		super.destroy();
+		
+		dialogBox.dialogSave();
+		
+		backgroundLayout.clear();
+		characterLayout.clear();
+		dialogBox.clear();
+		
+		trace('PlayState destroy');
+	}
+	
+	private function goToTitle():Void
+	{
+		Reg.currentChars = Reg.gameSave.getCharactersData();
+		
+		var gameSave:GameSave = Reg.gameSave;
+		gameSave.bind(Reg.objectSave);
+		gameSave.data.currentChars = Reg.currentChars;
+		gameSave.flush();
+		
+		FlxG.switchState(new MenuState());
 	}
 }

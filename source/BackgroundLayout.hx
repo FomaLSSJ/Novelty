@@ -5,11 +5,28 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class BackgroundLayout extends FlxTypedGroup<Dynamic>
 {
-	private var backgroundGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+	public var backgroundGroup:FlxTypedGroup<FlxSprite>;
 	
-	override public function new(MaxSize:Int = 0):Void
+	public function new(MaxSize:Int = 0):Void
 	{
 		super(MaxSize);
+	}
+	
+	override public function destroy():Void
+	{
+		trace("BackgroundLayout destroy");
+		backgroundGroup.clear();
+		kill();
+	}
+	
+	public function init():Void
+	{
+		backgroundGroup = new FlxTypedGroup<FlxSprite>();
+		
+		if (exists == false)
+		{
+			revive();
+		}
 		
 		add(backgroundGroup);
 	}
@@ -25,12 +42,6 @@ class BackgroundLayout extends FlxTypedGroup<Dynamic>
 	
 	public function removeBackground():Void
 	{
-		backgroundGroup.forEach(function(i)
-		{
-			trace(i);
-		});
-		
 		backgroundGroup.clear();
 	}
-	
 }

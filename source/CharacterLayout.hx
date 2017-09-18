@@ -15,9 +15,20 @@ class CharacterLayout extends FlxTypedGroup<Dynamic>
 		super(MaxSize);
 	}
 	
+	override public function destroy():Void
+	{
+		trace("CharacterLayout destroy");
+		kill();
+	}
+	
 	public function init():Void
 	{
-		characters = new Map<String, Character>();
+		characters = Reg.characters;
+		
+		if (exists == false)
+		{
+			revive();
+		}
 	}
 	
 	public function append(Key:String, Char:Character):Void

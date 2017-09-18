@@ -12,6 +12,8 @@ import flixel.tweens.FlxTween;
 
 class DialogBox extends FlxTypedGroup<Dynamic>
 {
+	private var gameSave:GameSave = Reg.gameSave;
+	
 	private var imageBox:FlxSprite;
 	private var whoBox:FlxText;
 	private var textBox:FlxText;
@@ -24,8 +26,20 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		super(MaxSize);
 	}
 	
+	override public function destroy():Void
+	{
+		trace("DialogBox destroy");
+		index = 0;
+		kill();
+	}
+	
 	public function init():Void
 	{
+		if (exists == false)
+		{
+			revive();
+		}
+		
 		imageBox = new FlxSprite();
 		imageBox.makeGraphic(FlxG.width - 40, 96, FlxColor.GRAY);
 		imageBox.setPosition(20, FlxG.height - (imageBox.height + 10));
@@ -43,7 +57,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		add(whoBox);
 		add(textBox);
 		
-		next(0);
+		//next(0);
 	}
 	
 	public function next(idx:Int=null):Void
@@ -81,5 +95,14 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				whoBox.text = Reg.character.say(data.who);
 				textBox.text = data.say;
 		}
+		
+		Reg.currentScriptIndex = index;
+	}
+	
+	public function dialogSave():Void
+	{
+		gameSave.bind(Reg.objectSave);
+		gameSave.data.currentScriptIndex = Reg.currentScriptIndex;
+		gameSave.flush();
 	}
 }
