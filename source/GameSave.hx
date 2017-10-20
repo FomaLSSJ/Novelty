@@ -12,14 +12,16 @@ class GameSave extends FlxSave
 	
 	public function getBackgroundData():Dynamic
 	{
-		var bg:BackgroundLayout = Reg.background;
-		var result:Map<String, String>;
+		var result:Dynamic = {};
+		var bgs:Map<String, Background> = Reg.backgrounds;
 		
-		bg.backgroundGroup.forEach(function (x:FlxSprite):Void
+		for (bg in bgs)
 		{
-			result = ["key" => "background", "sprite" => AssetPaths.background__png];
-			return;
-		});
+			if (bg.visible == true)
+			{
+				result = {background: bg.name};
+			}
+		}
 		
 		return result;
 	}

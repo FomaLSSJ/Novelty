@@ -1,5 +1,8 @@
 package;
 
+import haxe.Utf8;
+
+import flixel.util.FlxTimer;
 import haxe.Json;
 
 import flixel.math.FlxPoint;
@@ -17,8 +20,10 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	private var imageBox:FlxSprite;
 	private var whoBox:FlxText;
 	private var textBox:FlxText;
+	private var timer:FlxTimer;
 	
-	private var index = 0;
+	private var index:Int = 0;
+	
 	public var dialogs:Array<Dynamic>;
 	
 	override public function new(MaxSize:Int=0):Void
@@ -30,6 +35,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	{
 		trace("DialogBox destroy");
 		index = 0;
+		timer = null;
 		kill();
 	}
 	
@@ -57,14 +63,18 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		add(whoBox);
 		add(textBox);
 		
-		//next(0);
+		//TODO При запуске инитим скрипт с самого начала
+		next(0);
 	}
 	
 	public function next(idx:Int=null):Void
 	{
 		if (idx == null)
 		{
-			index++;
+			if (isNotPrinting())
+			{
+				index++;
+			}
 		}
 		else
 		{
@@ -75,11 +85,11 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		{
 			index = 0;
 		}
-
-		var key = dialogs[index].key;
-		var data = dialogs[index].data;
 		
 		var characters:Map<String, Character> = Reg.character.getCharacters();
+		
+		var key = dialogs[index].key;
+		var data = dialogs[index].data;
 		
 		switch (key)
 		{
@@ -91,12 +101,44 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				Reg.character.hide(data.who, data.to);
 
 				next();
+			case "bgshow":
+				Reg.background.setBackground(data.name);
+				
+				next();
 			default:
+				textBox.text = "";
+				
+				#if neko
+				trace(Utf8.validate(data.say));
+				#end
+				
 				whoBox.text = Reg.character.say(data.who);
-				textBox.text = data.say;
+				printing(data.say);
 		}
 		
 		Reg.currentScriptIndex = index;
+	}
+	
+	private function printing(Say:String = "", Delay:Float = 0.15):Void
+	{
+		var offset:Int = 0;
+		var size:Int = Say.length;
+		
+		if (isNotPrinting())
+		{
+			timer = new FlxTimer().start(Delay, function (e:FlxTimer):Void
+			{
+				var char:String = Say.charAt(offset);
+				
+				textBox.text += char;
+				offset++;
+			}, size);
+		}
+		else
+		{
+			textBox.text = Say;
+			timer.cancel();
+		}
 	}
 	
 	public function dialogSave():Void
@@ -104,5 +146,20 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		gameSave.bind(Reg.objectSave);
 		gameSave.data.currentScriptIndex = Reg.currentScriptIndex;
 		gameSave.flush();
+	}
+	
+	private function isNotPrinting():Bool
+	{
+		if (timer == null)
+		{
+			return true;
+		}
+		
+		if (timer.active == false)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }

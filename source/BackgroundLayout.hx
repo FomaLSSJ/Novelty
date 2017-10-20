@@ -5,7 +5,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class BackgroundLayout extends FlxTypedGroup<Dynamic>
 {
-	public var backgroundGroup:FlxTypedGroup<FlxSprite>;
+	public var backgroundGroup:FlxTypedGroup<Background>;
+	
+	private var backgrounds:Map<String, Dynamic>;
 	
 	public function new(MaxSize:Int = 0):Void
 	{
@@ -21,7 +23,8 @@ class BackgroundLayout extends FlxTypedGroup<Dynamic>
 	
 	public function init():Void
 	{
-		backgroundGroup = new FlxTypedGroup<FlxSprite>();
+		backgrounds = Reg.backgrounds;
+		backgroundGroup = new FlxTypedGroup<Background>();
 		
 		if (exists == false)
 		{
@@ -31,17 +34,36 @@ class BackgroundLayout extends FlxTypedGroup<Dynamic>
 		add(backgroundGroup);
 	}
 	
-	public function setBackground(image:Dynamic = null):Void
+	public function append(Key:String, Bg:Background):Void
 	{
-		if (image != null)
+		backgrounds.set(Key, Bg);
+		
+		backgroundGroup.add(Bg);
+	}
+	
+	public function setBackground(name:String = null):Void
+	{
+		if (name != null)
 		{
-			removeBackground();
-			backgroundGroup.add(new FlxSprite(0, 0, image));
+			backgroundGroup.forEach( function (Bg:Background):Void
+			{
+				if (name == Bg.name)
+				{
+					Bg.visible = true;
+				}
+				else
+				{
+					Bg.visible = false;
+				}
+			});
 		}
 	}
 	
 	public function removeBackground():Void
 	{
-		backgroundGroup.clear();
+		backgroundGroup.forEach(function (Bg:Background):Void
+		{
+			Bg.visible = false;
+		});
 	}
 }

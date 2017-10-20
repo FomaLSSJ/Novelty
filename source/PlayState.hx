@@ -25,7 +25,13 @@ class PlayState extends FlxState
 		textField = new FlxText(24, 24, 0, "PlayState");
 		
 		backgroundLayout.init();
-		backgroundLayout.setBackground(AssetPaths.background__png);
+
+		var bgimage:Background = new Background("bg", AssetPaths.background__png);
+		var bgnight:Background = new Background("night", AssetPaths.night__png);
+		backgroundLayout.append("bg", bgimage);
+		backgroundLayout.append("night", bgnight);
+		
+		//backgroundLayout.setBackground("bg");
 
 		characterLayout.init();
 		
@@ -48,6 +54,14 @@ class PlayState extends FlxState
 			gameSave.bind(Reg.objectSave);
 			dialogBox.next(gameSave.data.currentScriptIndex);
 			
+			if (gameSave.data.currentScene.background != null) {
+				backgroundLayout.setBackground(gameSave.data.currentScene.background);
+			}
+			else
+			{
+				backgroundLayout.removeBackground();
+			}
+			
 			var chars:Array<Dynamic> = gameSave.data.currentChars;
 			for (char in chars)
 			{
@@ -64,7 +78,7 @@ class PlayState extends FlxState
 		
 		if (FlxG.keys.justPressed.ENTER)
 		{
-			backgroundLayout.setBackground(AssetPaths.night__png);
+			backgroundLayout.setBackground("night");
 		}
 		
 		if (FlxG.keys.justPressed.SPACE)
@@ -82,7 +96,7 @@ class PlayState extends FlxState
 			trace('click right');
 		}
 		
-		if (FlxG.keys.justPressed.T)
+		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			goToTitle();
 		}
@@ -126,10 +140,12 @@ class PlayState extends FlxState
 	
 	private function goToTitle():Void
 	{
+		Reg.currentScene = Reg.gameSave.getBackgroundData();
 		Reg.currentChars = Reg.gameSave.getCharactersData();
 		
 		var gameSave:GameSave = Reg.gameSave;
 		gameSave.bind(Reg.objectSave);
+		gameSave.data.currentScene = Reg.currentScene;
 		gameSave.data.currentChars = Reg.currentChars;
 		gameSave.flush();
 		

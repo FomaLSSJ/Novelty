@@ -12,6 +12,7 @@ class Reg
 	public static var currentScriptIndex:Int = 0;
 	
 	public static var characters:Map<String, Character> = new Map<String, Character>();
+	public static var backgrounds:Map<String, Background> = new Map<String, Background>();
 	
 	public static var background:BackgroundLayout = new BackgroundLayout();
 	public static var character:CharacterLayout = new CharacterLayout();

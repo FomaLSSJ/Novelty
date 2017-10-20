@@ -1,4 +1,9 @@
 [{
+	"key": "bgshow",
+	"data": {
+		"name": "bg"
+	}
+}, {
 	"key": "message",
 	"data": {
 		"who": "",
