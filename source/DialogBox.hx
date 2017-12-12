@@ -101,6 +101,14 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	
 	public function next(idx:Int=null):Void
 	{
+		if (!this.active)
+		{
+			this.active = true;
+			this.visible = true;
+
+			return;
+		}
+		
 		if (idx == null)
 		{
 			(textBox.text.length < say.length) ? textBox.text = say : index++;

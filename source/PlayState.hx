@@ -96,6 +96,12 @@ class PlayState extends FlxState
 			trace('click right');
 		}
 		
+		if (FlxG.mouse.justPressedMiddle)
+		{
+			dialogBox.active = !dialogBox.active;
+			dialogBox.visible = !dialogBox.visible;
+		}
+		
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			goToTitle();
