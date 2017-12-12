@@ -1,10 +1,15 @@
 package;
 
-import haxe.Utf8;
+using unifill.Unifill;
+
+import unifill.CodePoint;
+
+import lime.project.Haxelib;
+
+import haxe.Json;
+import haxe.Timer;
 
 import flixel.util.FlxTimer;
-import haxe.Json;
-
 import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -23,6 +28,9 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	private var timer:FlxTimer;
 	
 	private var index:Int = 0;
+	private var lastPrint:Float = 0;
+	private var who:String = "...";
+	private var say:String = "...";
 	
 	public var dialogs:Array<Dynamic>;
 	
@@ -37,6 +45,35 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		index = 0;
 		timer = null;
 		kill();
+	}
+	
+	override public function update(elapsed:Float):Void
+	{
+		super.update(elapsed);
+		
+		var size:UInt = say.uLength();
+		var cText:String = textBox.text;
+		var cLength:UInt = cText.uLength();
+		
+		if (whoBox.text != who)
+		{
+			whoBox.text = who;
+		}
+
+		if (Timer.stamp() - lastPrint > Reg.textSpeed)
+		{
+			lastPrint = Timer.stamp();
+
+			trace(cText);
+			trace(cLength);
+			trace(say.uCharAt(cLength));
+			trace(say.uCharAt(cLength + 1));
+			
+			if (cLength < size)
+			{
+				textBox.text += say.uCharAt(cLength);
+			}
+		}
 	}
 	
 	public function init():Void
@@ -54,10 +91,12 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		dialogs = Script.json("assets/data/script.json");
 		
 		whoBox = new FlxText(imageBox.x + 20, imageBox.y + 15, imageBox.width - 40, "...");
-		whoBox.setFormat(AssetPaths.helios_cond__ttf, 16, FlxColor.WHITE);
+		//whoBox.setFormat(AssetPaths.helios_cond__ttf, 16, FlxColor.WHITE);
+		whoBox.setFormat("Arial", 16, FlxColor.WHITE);
 		
 		textBox = new FlxText(imageBox.x + 20, imageBox.y + 35, imageBox.width - 40, "...");
-		textBox.setFormat(AssetPaths.roboto_condensed__ttf, 14, FlxColor.WHITE);
+		//textBox.setFormat(AssetPaths.roboto_condensed__ttf, 14, FlxColor.WHITE);
+		textBox.setFormat("Arial", 14, FlxColor.WHITE);
 		
 		add(imageBox);
 		add(whoBox);
@@ -112,8 +151,11 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				trace(Utf8.validate(data.say));
 				#end
 				
-				whoBox.text = Reg.character.say(data.who);
-				printing(data.say);
+				who = Reg.character.say(data.who);
+				say = data.say;
+				
+				//whoBox.text = Reg.character.say(data.who);
+				//printing(data.say, Reg.textSpeed);
 		}
 		
 		Reg.currentScriptIndex = index;
@@ -121,23 +163,31 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	
 	private function printing(Say:String = "", Delay:Float = 0.15):Void
 	{
-		var offset:Int = 0;
-		var size:Int = Say.length;
+		var offset:UInt = 0;
+		var size:UInt = Say.length;
+		var uSize:UInt = Say.uLength();
 		
-		if (isNotPrinting())
+		trace(Timer.stamp());
+		trace(uSize);
+		trace(Say.uCharAt(1));
+		
+		if (isNotPrinting() && Delay != 0)
 		{
 			timer = new FlxTimer().start(Delay, function (e:FlxTimer):Void
 			{
-				var char:String = Say.charAt(offset);
+				var char:String = Say.uCharAt(offset);
 				
 				textBox.text += char;
 				offset++;
-			}, size);
+			}, uSize);
 		}
 		else
 		{
+			if (timer != null) {
+				timer.cancel();
+			}
+			
 			textBox.text = Say;
-			timer.cancel();
 		}
 	}
 	

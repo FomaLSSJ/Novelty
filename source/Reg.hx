@@ -6,6 +6,7 @@ class Reg
 	public static var gameSave:GameSave = new GameSave();
 	
 	public static var enabledSkip:Bool = false;
+	public static var textSpeed:Float = 0;
 	
 	public static var currentScene:Dynamic = {};
 	public static var currentChars:Array<Dynamic> = [];

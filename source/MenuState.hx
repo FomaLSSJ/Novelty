@@ -28,7 +28,7 @@ class MenuState extends FlxState
 		
 		add(buttonOptions);
 		
-		#if neko
+		#if (neko || windows)
 		buttonExit = new FlxButton(0, 0, "Exit", onClickExit);
 		buttonExit.setPosition(FlxG.width / 2 - buttonNewGame.width / 2, FlxG.height / 2 + 120);
 		
@@ -58,7 +58,7 @@ class MenuState extends FlxState
 		FlxG.switchState(new OptionState());
 	}
 	
-	#if neko
+	#if (neko || windows)
 	private function onClickExit():Void
 	{
 		Sys.exit(1);
