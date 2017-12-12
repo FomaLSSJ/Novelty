@@ -51,9 +51,9 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	{
 		super.update(elapsed);
 		
-		var size:UInt = say.uLength();
+		var size:Int = say.uLength();
 		var cText:String = textBox.text;
-		var cLength:UInt = cText.uLength();
+		var cLength:Int = cText.uLength();
 		
 		if (whoBox.text != who)
 		{
@@ -63,11 +63,6 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		if (Timer.stamp() - lastPrint > Reg.textSpeed)
 		{
 			lastPrint = Timer.stamp();
-
-			trace(cText);
-			trace(cLength);
-			trace(say.uCharAt(cLength));
-			trace(say.uCharAt(cLength + 1));
 			
 			if (cLength < size)
 			{
@@ -91,12 +86,10 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		dialogs = Script.json("assets/data/script.json");
 		
 		whoBox = new FlxText(imageBox.x + 20, imageBox.y + 15, imageBox.width - 40, "...");
-		//whoBox.setFormat(AssetPaths.helios_cond__ttf, 16, FlxColor.WHITE);
-		whoBox.setFormat("Arial", 16, FlxColor.WHITE);
+		whoBox.setFormat(AssetPaths.helios_cond__ttf, 16, FlxColor.WHITE);
 		
 		textBox = new FlxText(imageBox.x + 20, imageBox.y + 35, imageBox.width - 40, "...");
-		//textBox.setFormat(AssetPaths.roboto_condensed__ttf, 14, FlxColor.WHITE);
-		textBox.setFormat("Arial", 14, FlxColor.WHITE);
+		textBox.setFormat(AssetPaths.roboto_condensed__ttf, 14, FlxColor.WHITE);
 		
 		add(imageBox);
 		add(whoBox);
@@ -110,16 +103,13 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	{
 		if (idx == null)
 		{
-			if (isNotPrinting())
-			{
-				index++;
-			}
+			(textBox.text.length < say.length) ? textBox.text = say : index++;
 		}
 		else
 		{
 			index = idx;
 		}
-		
+
 		if (index > dialogs.length -1)
 		{
 			index = 0;
@@ -145,50 +135,18 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				
 				next();
 			default:
-				textBox.text = "";
+				trace(Reg.currentScriptIndex, index);
 				
-				#if neko
-				trace(Utf8.validate(data.say));
-				#end
+				if (Reg.currentScriptIndex != index)
+				{
+					textBox.text = "";
+				}
 				
 				who = Reg.character.say(data.who);
 				say = data.say;
-				
-				//whoBox.text = Reg.character.say(data.who);
-				//printing(data.say, Reg.textSpeed);
 		}
 		
 		Reg.currentScriptIndex = index;
-	}
-	
-	private function printing(Say:String = "", Delay:Float = 0.15):Void
-	{
-		var offset:UInt = 0;
-		var size:UInt = Say.length;
-		var uSize:UInt = Say.uLength();
-		
-		trace(Timer.stamp());
-		trace(uSize);
-		trace(Say.uCharAt(1));
-		
-		if (isNotPrinting() && Delay != 0)
-		{
-			timer = new FlxTimer().start(Delay, function (e:FlxTimer):Void
-			{
-				var char:String = Say.uCharAt(offset);
-				
-				textBox.text += char;
-				offset++;
-			}, uSize);
-		}
-		else
-		{
-			if (timer != null) {
-				timer.cancel();
-			}
-			
-			textBox.text = Say;
-		}
 	}
 	
 	public function dialogSave():Void
@@ -196,20 +154,5 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		gameSave.bind(Reg.objectSave);
 		gameSave.data.currentScriptIndex = Reg.currentScriptIndex;
 		gameSave.flush();
-	}
-	
-	private function isNotPrinting():Bool
-	{
-		if (timer == null)
-		{
-			return true;
-		}
-		
-		if (timer.active == false)
-		{
-			return true;
-		}
-		
-		return false;
 	}
 }
