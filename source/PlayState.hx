@@ -17,6 +17,7 @@ class PlayState extends FlxState
 	private var backgroundLayout:BackgroundLayout = Reg.background;
 	private var characterLayout:CharacterLayout = Reg.character;
 	private var dialogBox:DialogBox = Reg.dialogBox;
+	private var effectLayout:EffectLayout = Reg.effect;
 	
 	public function new(?MaxSize:Int=0, ?IsLoad:Bool=false):Void
 	{
@@ -34,12 +35,13 @@ class PlayState extends FlxState
 		//backgroundLayout.setBackground("bg");
 
 		characterLayout.init();
-		
 		dialogBox.init();
+		effectLayout.init();
 		
 		add(backgroundLayout);
 		add(characterLayout);
 		add(dialogBox);
+		add(effectLayout);
 		
 		add(textField);
 		
@@ -98,8 +100,7 @@ class PlayState extends FlxState
 		
 		if (FlxG.mouse.justPressedMiddle)
 		{
-			dialogBox.active = !dialogBox.active;
-			dialogBox.visible = !dialogBox.visible;
+			dialogBox.hideOrShow;
 		}
 		
 		if (FlxG.keys.justPressed.ESCAPE)
@@ -115,7 +116,7 @@ class PlayState extends FlxState
 			}
 			
 			trace("Pressed CTRL -> Skip Mode ON");
-			skipTimer = new FlxTimer().start(0.25, function (timer:FlxTimer):Void
+			skipTimer = new FlxTimer().start(0.1, function (timer:FlxTimer):Void
 			{
 				dialogBox.next();
 			}, 0);
@@ -140,6 +141,7 @@ class PlayState extends FlxState
 		backgroundLayout.clear();
 		characterLayout.clear();
 		dialogBox.clear();
+		effectLayout.clear();
 		
 		trace('PlayState destroy');
 	}

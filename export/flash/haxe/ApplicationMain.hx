@@ -58,12 +58,24 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/background.png.import");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
 		urls.push ("assets/images/hana_panty_smile.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/hana_panty_smile.png.import");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
 		urls.push ("assets/images/hana_school_confused.png");
 		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/hana_school_confused.png.import");
+		types.push (lime.Assets.AssetType.TEXT);
 		
 		
 		urls.push ("assets/images/images-go-here.txt");
@@ -71,6 +83,14 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/images/night.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/night.png.import");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/images/to_be_continued.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -167,7 +187,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "590",
+			build: "642",
 			company: "FomaLSSJ",
 			file: "Novelty",
 			fps: 60,

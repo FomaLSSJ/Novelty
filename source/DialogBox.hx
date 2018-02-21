@@ -27,6 +27,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	private var textBox:FlxText;
 	private var timer:FlxTimer;
 	
+	private var hide:Bool = false;
 	private var index:Int = 0;
 	private var lastPrint:Float = 0;
 	private var who:String = "...";
@@ -103,9 +104,8 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	{
 		if (!this.active)
 		{
-			this.active = true;
-			this.visible = true;
-
+			hideOrShow();
+			
 			return;
 		}
 		
@@ -120,6 +120,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 
 		if (index > dialogs.length -1)
 		{
+			Reg.effect.reset();
 			index = 0;
 		}
 		
@@ -142,6 +143,11 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				Reg.background.setBackground(data.name);
 				
 				next();
+			case "effect":
+				Reg.effect.start(data.delay, function ():Void
+				{
+					next();
+				});
 			default:
 				trace(Reg.currentScriptIndex, index);
 				
@@ -155,6 +161,17 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		}
 		
 		Reg.currentScriptIndex = index;
+	}
+	
+	public function hideOrShow():Void
+	{
+		if (Reg.effect.isEffect == true)
+		{
+			return;
+		}
+		
+		active = !active;
+		visible = !visible;
 	}
 	
 	public function dialogSave():Void

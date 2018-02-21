@@ -6,6 +6,8 @@ import flixel.ui.FlxButton;
 
 class MenuState extends FlxState 
 {
+	private var gameSave:GameSave = Reg.gameSave;
+	
 	private var buttonNewGame:FlxButton;
 	private var buttonLoadGame:FlxButton;
 	private var buttonOptions:FlxButton;
@@ -13,6 +15,11 @@ class MenuState extends FlxState
 	
 	override public function create():Void
 	{
+		gameSave.bind(Reg.objectSave);
+		Reg.enabledSkip = (gameSave.data.enabledSkip == true) ? true : false;
+		Reg.textSpeed = (gameSave.data.textSpeed != null) ? gameSave.data.textSpeed : 0;
+		gameSave.close();
+		
 		buttonNewGame = new FlxButton(0, 0, "New Game", onClickPlay);
 		buttonNewGame.setPosition(FlxG.width / 2 - buttonNewGame.width / 2, FlxG.height / 2);
 		
