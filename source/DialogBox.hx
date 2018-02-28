@@ -148,6 +148,21 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				{
 					next();
 				});
+			case "menu":
+				trace(data.items);
+
+				var items:Array<Dynamic> = data.items;
+				
+				showMenu(items);
+
+				//goToLabel("pass");
+				//goToLabel("jump1");
+
+				next();
+			case "label":
+				trace(data);
+				
+				next();
 			default:
 				trace(Reg.currentScriptIndex, index);
 				
@@ -161,6 +176,35 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		}
 		
 		Reg.currentScriptIndex = index;
+	}
+	
+	private function goToLabel(Label:String):Void
+	{
+		if (Label == "pass")
+		{
+			return;
+		}
+		
+		var count:Int = 0;
+		for (item in dialogs)
+		{
+			if (item.key == "label" && item.data == Label)
+			{
+				trace(dialogs[ count ]);
+				index = count;
+				return;
+			}
+			
+			count++;
+		}
+	}
+	
+	private function showMenu(Items:Array<Dynamic>):Void
+	{
+		for (item in Items)
+		{
+			trace(item);
+		}
 	}
 	
 	public function hideOrShow():Void

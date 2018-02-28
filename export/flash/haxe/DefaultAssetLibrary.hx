@@ -71,6 +71,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_monsterrat_ttf);
 		
@@ -96,6 +100,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/background.png", AssetType.IMAGE);
 		className.set ("assets/images/background.png.import", __ASSET__assets_images_background_png_import);
 		type.set ("assets/images/background.png.import", AssetType.TEXT);
+		className.set ("assets/images/bedroom.png", __ASSET__assets_images_bedroom_png);
+		type.set ("assets/images/bedroom.png", AssetType.IMAGE);
+		className.set ("assets/images/g1.png", __ASSET__assets_images_g1_png);
+		type.set ("assets/images/g1.png", AssetType.IMAGE);
+		className.set ("assets/images/g2.png", __ASSET__assets_images_g2_png);
+		type.set ("assets/images/g2.png", AssetType.IMAGE);
+		className.set ("assets/images/g3.png", __ASSET__assets_images_g3_png);
+		type.set ("assets/images/g3.png", AssetType.IMAGE);
 		className.set ("assets/images/hana_panty_smile.png", __ASSET__assets_images_hana_panty_smile_png);
 		type.set ("assets/images/hana_panty_smile.png", AssetType.IMAGE);
 		className.set ("assets/images/hana_panty_smile.png.import", __ASSET__assets_images_hana_panty_smile_png_import);
@@ -165,6 +177,22 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
+		id = "assets/images/bedroom.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/g1.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/g2.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/g3.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/hana_panty_smile.png";
 		path.set (id, id);
 		
@@ -270,6 +298,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/images/background.png.import", __ASSET__assets_images_background_png_import);
 		type.set ("assets/images/background.png.import", AssetType.TEXT);
+		
+		className.set ("assets/images/bedroom.png", __ASSET__assets_images_bedroom_png);
+		type.set ("assets/images/bedroom.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/g1.png", __ASSET__assets_images_g1_png);
+		type.set ("assets/images/g1.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/g2.png", __ASSET__assets_images_g2_png);
+		type.set ("assets/images/g2.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/g3.png", __ASSET__assets_images_g3_png);
+		type.set ("assets/images/g3.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/hana_panty_smile.png", __ASSET__assets_images_hana_panty_smile_png);
 		type.set ("assets/images/hana_panty_smile.png", AssetType.IMAGE);
@@ -971,6 +1011,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_data_script_json extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_background_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_background_png_import extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_images_bedroom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_g1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_g2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_g3_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_hana_panty_smile_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_hana_panty_smile_png_import extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_hana_school_confused_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1011,6 +1055,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
 @:keep #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font { public function new () { super (); name = "Monsterrat"; } } 
 
@@ -1032,6 +1080,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/data/script.json") #if display private #end class __ASSET__assets_data_script_json extends lime.utils.Bytes {}
 @:image("assets/images/background.png") #if display private #end class __ASSET__assets_images_background_png extends lime.graphics.Image {}
 @:file("assets/images/background.png.import") #if display private #end class __ASSET__assets_images_background_png_import extends lime.utils.Bytes {}
+@:image("assets/images/bedroom.png") #if display private #end class __ASSET__assets_images_bedroom_png extends lime.graphics.Image {}
+@:image("assets/images/g1.png") #if display private #end class __ASSET__assets_images_g1_png extends lime.graphics.Image {}
+@:image("assets/images/g2.png") #if display private #end class __ASSET__assets_images_g2_png extends lime.graphics.Image {}
+@:image("assets/images/g3.png") #if display private #end class __ASSET__assets_images_g3_png extends lime.graphics.Image {}
 @:image("assets/images/hana_panty_smile.png") #if display private #end class __ASSET__assets_images_hana_panty_smile_png extends lime.graphics.Image {}
 @:file("assets/images/hana_panty_smile.png.import") #if display private #end class __ASSET__assets_images_hana_panty_smile_png_import extends lime.utils.Bytes {}
 @:image("assets/images/hana_school_confused.png") #if display private #end class __ASSET__assets_images_hana_school_confused_png extends lime.graphics.Image {}

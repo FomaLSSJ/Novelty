@@ -28,9 +28,13 @@ class PlayState extends FlxState
 		backgroundLayout.init();
 
 		var bgimage:Background = new Background("bg", AssetPaths.background__png);
-		var bgnight:Background = new Background("night", AssetPaths.night__png);
 		backgroundLayout.append("bg", bgimage);
+
+		var bgnight:Background = new Background("night", AssetPaths.night__png);
 		backgroundLayout.append("night", bgnight);
+
+		var bedroom:Background = new Background("bedroom", AssetPaths.bedroom__png);		
+		backgroundLayout.append("bedroom", bedroom);
 		
 		//backgroundLayout.setBackground("bg");
 
@@ -45,11 +49,25 @@ class PlayState extends FlxState
 		
 		add(textField);
 		
+		var mc:Character = new Character("mc", "Джонатанн");
+		characterLayout.append("mc", mc);
+		
 		var hana:Character = new Character("ha", "Хана");
 		hana.addSprite("normal", AssetPaths.hana_school_confused__png);
 		hana.addSprite("home", AssetPaths.hana_panty_smile__png);
-		
 		characterLayout.append("ha", hana);
+		
+		var gop1:Character = new Character("g1", "Gop 1");
+		gop1.addSprite("normal", AssetPaths.g1__png);
+		characterLayout.append("g1", gop1);
+		
+		var gop2:Character = new Character("g2", "Gop 2");
+		gop2.addSprite("normal", AssetPaths.g2__png);
+		characterLayout.append("g2", gop2);
+		
+		var gop3:Character = new Character("g3", "Gop 3");
+		gop3.addSprite("normal", AssetPaths.g3__png);
+		characterLayout.append("g3", gop3);
 		
 		if (IsLoad == true)
 		{

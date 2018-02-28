@@ -62,6 +62,22 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/images/bedroom.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/g1.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/g2.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/g3.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/hana_panty_smile.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -187,7 +203,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "642",
+			build: "696",
 			company: "FomaLSSJ",
 			file: "Novelty",
 			fps: 60,
