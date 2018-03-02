@@ -11,8 +11,6 @@ class EffectLayout extends FlxTypedGroup<Dynamic>
 	private var dialogBox:DialogBox = Reg.dialogBox;
 	private var toBeContinue:FlxSprite;
 	
-	public var isEffect:Bool = false;
-	
 	override public function new(MaxSize:Int=0):Void
 	{
 		super(MaxSize);
@@ -39,7 +37,7 @@ class EffectLayout extends FlxTypedGroup<Dynamic>
 	
 	public function start(?Delay:Int=1, ?Callback:Void->Void):Void
 	{
-		isEffect = true;
+		Reg.mode = Reg.GAME_MODE.EFFECT;
 		dialogBox.active = dialogBox.visible = false;
 
 		FlxTween.tween(toBeContinue,
@@ -50,14 +48,14 @@ class EffectLayout extends FlxTypedGroup<Dynamic>
 				{
 					Timer.delay(function ():Void
 					{
-						isEffect = false;
+						Reg.mode = Reg.GAME_MODE.NORMAL;
 						dialogBox.active = dialogBox.visible = true;
 						Callback();
 					}, Delay * 1000);
 				}
 				else
 				{
-					isEffect = false;
+					Reg.mode = Reg.GAME_MODE.NORMAL;
 					dialogBox.active = dialogBox.visible = true;
 				}
 			}});
@@ -67,7 +65,7 @@ class EffectLayout extends FlxTypedGroup<Dynamic>
 	{
 		if (toBeContinue != null)
 		{
-			isEffect = false;
+			Reg.mode = Reg.GAME_MODE.NORMAL;
 			toBeContinue.setPosition(toBeContinue.width * -1, FlxG.height - toBeContinue.height);
 		}
 	}

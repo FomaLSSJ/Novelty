@@ -4,6 +4,13 @@
 		"name": "bedroom"
 	}
 }, {
+	"key": "triggers",
+	"data": {
+		"triggers": {
+			"kek": 666.13
+		}
+	}
+}, {
 	"key": "message",
 	"data": {
 		"who": "",
@@ -73,10 +80,14 @@
 	"data": {
 		"items": [{
 			"name": "Item 1",
-			"label": "pass"
+			"label": "pass",
+			"triggers": {
+				"run_away": true
+			}
 		}, {
 			"name": "Item 2",
-			"label": "jump1"
+			"label": "jump1",
+			"triggers": null
 		}]
 	}
 }, {

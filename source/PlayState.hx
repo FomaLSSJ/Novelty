@@ -123,6 +123,8 @@ class PlayState extends FlxState
 		
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			Reg.mode = Reg.GAME_MODE.NORMAL;
+			
 			goToTitle();
 		}
 		

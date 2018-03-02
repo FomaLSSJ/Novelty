@@ -2,6 +2,7 @@ package;
 
 using unifill.Unifill;
 
+import flixel.group.FlxGroup;
 import unifill.CodePoint;
 
 import lime.project.Haxelib;
@@ -17,6 +18,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxButton;
 
 class DialogBox extends FlxTypedGroup<Dynamic>
 {
@@ -32,6 +34,8 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	private var lastPrint:Float = 0;
 	private var who:String = "...";
 	private var say:String = "...";
+	private var menuButtons: Array<FlxButton>;
+	private var groupButtons:FlxGroup = new FlxGroup();
 	
 	public var dialogs:Array<Dynamic>;
 	
@@ -76,6 +80,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	{
 		if (exists == false)
 		{
+			groupButtons.revive();
 			revive();
 		}
 		
@@ -95,13 +100,19 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		add(imageBox);
 		add(whoBox);
 		add(textBox);
+		add(groupButtons);
 		
 		//TODO При запуске инитим скрипт с самого начала
 		next(0);
 	}
 	
 	public function next(idx:Int=null):Void
-	{
+	{	
+		if (Reg.mode == Reg.GAME_MODE.MENU && idx == null)
+		{
+			return;
+		}
+		
 		if (!this.active)
 		{
 			hideOrShow();
@@ -115,7 +126,7 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 		}
 		else
 		{
-			index = idx;
+			index = (dialogs[idx].key == "menu" && idx != 0) ? --idx : idx;
 		}
 
 		if (index > dialogs.length -1)
@@ -155,12 +166,13 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 				
 				showMenu(items);
 
-				//goToLabel("pass");
-				//goToLabel("jump1");
-
 				next();
 			case "label":
 				trace(data);
+				
+				next();
+			case "triggers":
+				useTriggers(data.triggers);
 				
 				next();
 			default:
@@ -180,9 +192,14 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 	
 	private function goToLabel(Label:String):Void
 	{
+		Reg.mode = Reg.GAME_MODE.NORMAL;
+		menuButtons = [];
+		groupButtons.clear();
+		groupButtons.visible = groupButtons.alive = false;
+		
 		if (Label == "pass")
 		{
-			return;
+			next();
 		}
 		
 		var count:Int = 0;
@@ -192,24 +209,64 @@ class DialogBox extends FlxTypedGroup<Dynamic>
 			{
 				trace(dialogs[ count ]);
 				index = count;
-				return;
+				next();
 			}
 			
 			count++;
+		}
+		
+		next();
+	}
+	
+	private function useTriggers(Triggers:Dynamic=null):Void
+	{
+		if (Triggers == null)
+		{
+			return;
+		}
+		
+		for (key in Reflect.fields(Triggers))
+		{
+			Reg.triggers.set(key, Reflect.field(Triggers, key));
 		}
 	}
 	
 	private function showMenu(Items:Array<Dynamic>):Void
 	{
+		Reg.mode = Reg.GAME_MODE.MENU;
+		
+		menuButtons = [];
+		groupButtons.clear();
+		
 		for (item in Items)
 		{
-			trace(item);
+			var button:FlxButton = new FlxButton(0, 0, item.name, function ():Void
+			{
+				useTriggers(item.triggers);
+				goToLabel(item.label);
+			});
+			button.makeGraphic(FlxG.width, 18, FlxColor.GRAY);
+			button.alpha = 0.75;
+			menuButtons.push(button);
 		}
+		
+		var centerY:Float = FlxG.height / 2;
+		
+		var count:Int = 0;
+		
+		for (button in menuButtons)
+		{
+			button.y = count * (button.height + 8) + centerY;
+			groupButtons.add(button);
+			count++;
+		}
+		
+		groupButtons.visible = groupButtons.alive = true;
 	}
 	
 	public function hideOrShow():Void
 	{
-		if (Reg.effect.isEffect == true)
+		if (Reg.mode == Reg.GAME_MODE.EFFECT || Reg.mode == Reg.GAME_MODE.MENU)
 		{
 			return;
 		}

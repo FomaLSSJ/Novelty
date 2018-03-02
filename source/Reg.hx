@@ -1,5 +1,13 @@
 package;
 
+enum GAME_MODE
+{
+	NORMAL;
+	SKIP;
+	EFFECT;
+	MENU;
+}
+
 class Reg 
 {
 	public static var objectSave:String = "Novelty";
@@ -7,10 +15,12 @@ class Reg
 	
 	public static var enabledSkip:Bool = false;
 	public static var textSpeed:Float = 0;
+	public static var mode:GAME_MODE = NORMAL;
 	
 	public static var currentScene:Dynamic = {};
 	public static var currentChars:Array<Dynamic> = [];
 	public static var currentScriptIndex:Int = 0;
+	public static var triggers:Map<String, Dynamic> = new Map<String, Dynamic>();
 	
 	public static var characters:Map<String, Character> = new Map<String, Character>();
 	public static var backgrounds:Map<String, Background> = new Map<String, Background>();
